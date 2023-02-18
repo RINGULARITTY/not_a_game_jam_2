@@ -1,0 +1,11 @@
+# Ignore Everything
+*
+
+# Not git
+!.gitignore
+!README.md
+!NotAGameJam2
+
+# Not .cpp and .hpp
+!*.cpp
+!*.hpp
