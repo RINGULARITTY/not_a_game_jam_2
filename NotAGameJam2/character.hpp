@@ -6,6 +6,7 @@
 #include <string>
 #include <array>
 #include <optional>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 class Character {
 public:
@@ -19,11 +20,15 @@ public:
 class CharacterIconRender : RenderElement {
 public:
     CharacterIconRender();
+    void setPosition(const sf::Vector2f& pos);
     void setCharacter(const Character& c);
 
     void render(sf::RenderWindow& rw);
 
+    sf::Vector2f getSize();
+
 private:
+    sf::RectangleShape border;
     SpriteWrapper icon;
 };
 

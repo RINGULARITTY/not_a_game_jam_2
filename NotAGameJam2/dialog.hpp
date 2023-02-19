@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <string>
+#include <SFML/Graphics/Text.hpp>
 
 
 class DialogRender;
@@ -23,6 +24,11 @@ public:
 private:
     const Dialog* dialog;
     CharacterIconRender characterIcon;
+    std::string sentence;
+    size_t sentenceIndex;
+    sf::Text text;
+    sf::RectangleShape textBorder;
+    sf::Clock time;
 };
 
 

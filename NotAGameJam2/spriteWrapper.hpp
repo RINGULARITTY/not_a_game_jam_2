@@ -13,7 +13,12 @@ public:
 
     void load();
 
+    void setScale(float scale);
+    void setPosition(const sf::Vector2f& pos);
+
     void render(sf::RenderWindow& rw);
+
+    sf::Vector2f getSize();
 
     std::string texturePath;
 private:

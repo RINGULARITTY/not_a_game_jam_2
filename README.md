@@ -7,8 +7,11 @@
 - SFML 2.5.1
 
 **Dev credits :**
-- RINGULARITY (https://github.com/RINGULARITTY)
+- RINGULARITY - https://github.com/RINGULARITTY
 
 **Graphics credits :**
-- Free Game Assets (https://free-game-assets.itch.io/)
-- Franuka (https://franuka.itch.io/)
+- Free Game Assets - https://free-game-assets.itch.io/
+- Franuka - https://franuka.itch.io/
+
+**Fonts credits :**
+- New Typography - https://www.fontspace.com/new-typography
