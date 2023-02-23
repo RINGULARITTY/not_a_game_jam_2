@@ -1,5 +1,6 @@
 #include "dialog.hpp"
 #include "contants.hpp"
+#include "keyboardWrapper.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -22,35 +23,38 @@ int main(int argc, char** argv) {
         DialogSentence(Characters::getCharacterByRole("kid01"), "Bon vous avez finis ? on a dit qu'on allait pêcher...", false)
     }});
 
-    DialogRender dr;
-    dr.startDialog(&d);
+    std::vector<DialogRender> drs{};
+    drs.emplace_back();
+    drs[0].startDialog(&d);
 
-    int space = 0;
-    bool stopDialog = false;
+    KeyboardWrapper kw;
+    kw.addKey(sf::Keyboard::Space, false);
+
 
     sf::Event ev;
     while (rw.isOpen()) {
         while (rw.pollEvent(ev)) {
             if (ev.type == sf::Event::Closed)
                 rw.close();
-            if (ev.type == sf::Event::KeyPressed) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && space == 0)
-                    space = 1;
-            }
-            if (ev.type == sf::Event::KeyReleased) {
-                if (ev.key.code == sf::Keyboard::Space && space == 2)
-                    space = 0;
+            else if (ev.type == sf::Event::KeyPressed)
+                kw.pressedInput(ev.key.code);
+            else if (ev.type == sf::Event::KeyReleased)
+                kw.releasedInput(ev.key.code);
+        }
+
+        auto spaceKey = kw.getKeyWrapper(sf::Keyboard::Space);
+        if (spaceKey.has_value() && spaceKey.value()->consumeAllCounter() > 0) {
+            for (auto& d : drs) {
+                if (d.continueInput())
+                    drs.clear();
             }
         }
 
-        if (space == 1) {
-            space = 2;
-            stopDialog = dr.continueInput();
-        }
+        kw.printStatus();
 
         rw.clear();
-        if (!stopDialog)
-            dr.render(rw);
+        for (auto& d : drs)
+            d.render(rw);
         rw.display();
     }
 }

@@ -2,6 +2,8 @@
 
 > Name of the game cannot be reveled for now
 
+Lines of code : 599
+
 **Components used :**
 - C++20
 - SFML 2.5.1

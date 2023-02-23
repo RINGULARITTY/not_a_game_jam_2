@@ -6,7 +6,7 @@
 class Constants {
 public:
     static void loadAllRessources(const std::string& execPath) {
-        for (int i = execPath.size(); i >= 0; --i) {
+        for (size_t i = execPath.size(); i > 0; --i) {
             if (execPath[i] == '\\') {
                 execFolder = execPath.substr(0, i + 1);
                 break;

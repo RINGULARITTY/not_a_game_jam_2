@@ -83,6 +83,9 @@ bool DialogRender::continueInput() {
 }
 
 
+///////////////////////
+
+
 Dialog::Dialog(std::vector<DialogSentence>&& dialogs_):
     dialogs{ std::move(dialogs_) },
     dialogRender{}
@@ -95,6 +98,10 @@ const DialogSentence& Dialog::getDialogSentence(size_t index) const {
 size_t Dialog::getDialogAmount() const {
     return dialogs.size();
 }
+
+
+////////////////////////
+
 
 DialogSentence::DialogSentence(Character& speaker_,
     const std::string& speakSentence_, bool left_, bool flip_) :

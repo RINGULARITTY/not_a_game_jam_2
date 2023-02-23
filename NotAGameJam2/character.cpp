@@ -11,6 +11,9 @@ std::string Character::getIconLocation() const {
 }
 
 
+//////////////////////
+
+
 CharacterIconRender::CharacterIconRender() :
     icon{},
     border{} {
@@ -43,6 +46,9 @@ sf::Vector2f CharacterIconRender::getSize() {
     float borderTickness = border.getOutlineThickness();
     return sf::Vector2f(iconSize.x + 2 * borderTickness, iconSize.y + 2 * borderTickness);
 }
+
+
+//////////////////////
 
 
 Character& Characters::getCharacterByRole(const std::string& role) {
