@@ -37,5 +37,5 @@ public:
     static Character& getCharacterByRole(const std::string& role);
 
 private:
-    static std::array<Character, 1> characters;
+    static std::array<Character, 7> characters;
 };

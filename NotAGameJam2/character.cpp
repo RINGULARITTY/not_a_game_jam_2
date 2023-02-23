@@ -54,6 +54,12 @@ Character& Characters::getCharacterByRole(const std::string& role) {
     return characters[0];
 }
 
-inline std::array<Character, 1> Characters::characters = std::array<Character, 1> { {
-    Character("Kappa", "alchemist")
+inline std::array<Character, 7> Characters::characters = std::array<Character, 7> { {
+    Character("Sulphra", "alchemist"),
+    Character("Myrin", "barmaid"),
+    Character("Chove", "bartender"),
+    Character("Gilus", "blacksmith"),
+    Character("Sam", "farmer"),
+    Character("Variane", "fisherman"),
+    Character("Titouan", "kid01")
 }};

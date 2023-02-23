@@ -5,6 +5,7 @@ DialogRender::DialogRender() :
     dialog{},
     characterIcon{},
     sentence{},
+    sentenceLetterIndex{},
     sentenceIndex{},
     text("", Constants::font, 17),
     textBorder(sf::Vector2f(1280 - 24, 100)),
@@ -26,9 +27,9 @@ void DialogRender::startDialog(const Dialog* dialog_) {
 }
 
 void DialogRender::render(sf::RenderWindow& rw) {
-    if (sentenceIndex == 0) {
-        const DialogSentence& d = dialog->getDialogSentence(0);
-        sentence = d.speaker.role + " : " + d.speakSentence;
+    if (sentenceLetterIndex == 0) {
+        const DialogSentence& d = dialog->getDialogSentence(sentenceIndex);
+        sentence = d.speaker.name + " : " + d.speakSentence;
         text.setString("");
 
         size_t lastBackSlash = 0;
@@ -50,20 +51,35 @@ void DialogRender::render(sf::RenderWindow& rw) {
 
         characterIcon.setCharacter(d.speaker);
         sf::Vector2f characterIconSize = characterIcon.getSize();
-        characterIcon.setPosition(sf::Vector2f(1280.0f - characterIconSize.x - 10, textBorder.getPosition().y - characterIconSize.y));
+        if (d.left)
+            characterIcon.setPosition(sf::Vector2f(14, textBorder.getPosition().y - characterIconSize.y));
+        else
+            characterIcon.setPosition(sf::Vector2f(1280.0f - characterIconSize.x - 10, textBorder.getPosition().y - characterIconSize.y));
     }
 
-    if (time.getElapsedTime().asMilliseconds() >= 5 * sentenceIndex && sentenceIndex < sentence.size()) {
-        sentenceIndex += 2;
-        if (sentenceIndex > sentence.size())
-            sentenceIndex = sentence.size();
+    if (time.getElapsedTime().asMilliseconds() >= 5 * sentenceLetterIndex && sentenceLetterIndex < sentence.size()) {
+        sentenceLetterIndex += 2;
+        if (sentenceLetterIndex > sentence.size())
+            sentenceLetterIndex = sentence.size();
 
-        text.setString(sentence.substr(0, sentenceIndex));
+        text.setString(sentence.substr(0, sentenceLetterIndex));
     }
 
     characterIcon.render(rw);
     rw.draw(textBorder);
     rw.draw(text);
+}
+
+bool DialogRender::continueInput() {
+    if (sentenceLetterIndex == sentence.size()) {
+        if (sentenceIndex >= dialog->getDialogAmount() - 1)
+            return true;
+        sentenceIndex++;
+        sentenceLetterIndex = 0;
+    }
+    else
+        sentenceLetterIndex = sentence.size() - 1;
+    return false;
 }
 
 
@@ -76,9 +92,14 @@ const DialogSentence& Dialog::getDialogSentence(size_t index) const {
     return dialogs[index];
 }
 
+size_t Dialog::getDialogAmount() const {
+    return dialogs.size();
+}
+
 DialogSentence::DialogSentence(Character& speaker_,
-    const std::string& speakSentence_, bool flip_) :
+    const std::string& speakSentence_, bool left_, bool flip_) :
     speaker{ speaker_ },
     speakSentence{ speakSentence_ },
-    flip{ flip_ }
+    flip{ flip_ },
+    left{ left_ }
 {}

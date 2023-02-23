@@ -21,10 +21,14 @@ public:
 
     void render(sf::RenderWindow& rw);
 
+    // Return true when no more dialog
+    bool continueInput();
+
 private:
     const Dialog* dialog;
     CharacterIconRender characterIcon;
     std::string sentence;
+    size_t sentenceLetterIndex;
     size_t sentenceIndex;
     sf::Text text;
     sf::RectangleShape textBorder;
@@ -37,6 +41,7 @@ public:
     Dialog(std::vector<DialogSentence>&& dialogs_);
 
     const DialogSentence& getDialogSentence(size_t index) const;
+    size_t getDialogAmount() const;
 
 private:
     std::vector<DialogSentence> dialogs;
@@ -47,9 +52,10 @@ private:
 class DialogSentence {
 public:
     DialogSentence(Character& speaker_,
-        const std::string& speakSentence_, bool flip_ = false);
+        const std::string& speakSentence_, bool left_ = true, bool flip_ = false);
 
     bool flip;
+    bool left;
     Character& speaker;
     std::string speakSentence;
 };
