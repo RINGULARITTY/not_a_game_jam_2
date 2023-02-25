@@ -2,7 +2,7 @@
 
 > Name of the game cannot be reveled for now
 
-Lines of code : 599
+Lines of code : 639
 
 **Components used :**
 - C++20
